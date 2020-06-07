@@ -1,0 +1,60 @@
+clear all, close all, clc
+%-----------------------------Inciso 1.1-----------------------------------
+A = 100;
+B = 100;
+u1 = zeros(A,B);
+u2 = zeros(A,B);
+u3 = zeros(A,B);
+u4 = zeros(A,B);
+[X,Y] = meshgrid(1:1:A,1:1:B);
+
+BC = ones(size(B,1));
+
+%Con N = 2
+for k=1:2
+    Ak1 = (2/(sin(k*pi*A/B)))*sum(BC.*sinh(k*pi*(1:B)/B));
+    u1 = u1 + Ak1*sin(k*pi*Y/B).*sinh(k*pi*X/B);
+end
+colormap cool;
+figure(1)
+subplot(2,1,1)
+surf(X,Y,u1);
+subplot(2,1,2)
+imagesc(u1)
+colorbar;
+
+%Con N = 5
+for k2=1:5
+    Ak2 = (2/(sin(k2*pi*A/B)))*sum(BC.*sinh(k2*pi*(1:B)/B));
+    u2 = u2 + Ak2*sin(k2*pi*Y/B).*sinh(k2*pi*X/B);
+end
+figure(2)
+subplot(2,1,1)
+surf(X,Y,u2);
+subplot(2,1,2)
+imagesc(u2)
+colorbar;
+
+%Con N = 10
+for k3=1:10
+    Ak3 =(2/(sin(k3*pi*A/B)))*sum(BC.*sinh(k3*pi*(1:B)/B));
+    u3 = u3 + Ak3*sin(k3*pi*Y/B).*sinh(k3*pi*X/B);
+end
+figure(3)
+subplot(2,1,1)
+surf(X,Y,u3);
+subplot(2,1,2)
+imagesc(u3)
+colorbar;
+
+%Con N = 20
+for k4=1:20
+    Ak4 = (2/(sin(k4*pi*A/B)))*sum(BC.*sinh(k4*pi*(1:B)/B));
+    u4 = u4 + Ak4*sin(k4*pi*Y/B).*sinh(k4*pi*X/B);
+end
+figure(4)
+subplot(2,1,1)
+surf(u4);
+subplot(2,1,2)
+imagesc(u4)
+colorbar;
