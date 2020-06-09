@@ -1,0 +1,773 @@
+clear all, close all, clc
+%% ---------------------------Inciso 1.1-----------------------------------
+% Con tan^-1 en H(y)
+e0=8.854*10^-12;
+A = 100;
+B = 100;
+u1 = zeros(A,B);
+u2 = zeros(A,B);
+u3 = zeros(A,B);
+u4 = zeros(A,B);
+g = atan((1:A)/A);
+[X,Y] = meshgrid(1:1:A,1:1:B);
+
+BC = ones(size(B,1));
+
+%Con N = 2
+for k=1:2
+    Ak1 = (2/(sin(k*pi*A/B)))*sum(BC.*sinh(k*pi*(1:B)/B).*g);
+    u1 = u1 + Ak1*sin(k*pi*Y/B).*sinh(k*pi*X/B);
+    [Xe1,Ye1]=gradient(u1);
+    [XD1,YD1]=gradient(u1);
+end
+colormap cool;
+figure(1)
+%3D
+subplot(3,2,1)
+meshc(X,Y,u1);
+colorbar;
+title('Potencial 3D N=2')
+subplot(3,2,3)
+meshc(Xe1,Ye1)
+title('Campo 3D N=2')
+subplot(3,2,5)
+meshc(XD1.*e0,YD1.*e0)
+title('Densidad 3D N=2')
+%2D
+subplot(3,2,2)
+imagesc(u1);
+title('Potencial 2D N=2')
+colorbar;
+subplot(3,2,4)
+quiver(Xe1,Ye1)
+title('Campo 2D N=2')
+subplot(3,2,6)
+quiver(XD1.*e0,YD1.*e0)
+title('Densidad 2D N=2')
+
+%Con N = 5
+for L=1:5
+    Ak2 = (2/(sin(L*pi*A/B)))*sum(BC.*sinh(L*pi*(1:B)/B).*g);
+    u2 = u2 + Ak2*sin(L*pi*Y/B).*sinh(L*pi*X/B);
+    [Xe2,Ye2]=gradient(u2);
+end
+%3D
+colormap cool;
+figure(2)
+subplot(3,2,1)
+meshc(X,Y,u2);
+title('Potencial 3D N=5')
+colorbar;
+subplot(3,2,3)
+meshc(Xe2,Ye2)
+title('Campo 3D N=5')
+subplot(3,2,5)
+meshc(Xe2.*e0,Ye2.*e0)
+title('Densidad 3D N=5')
+%2D
+subplot(3,2,2)
+imagesc(u2);
+title('Potencial 2D N=5')
+colorbar;
+subplot(3,2,4)
+quiver(Xe2,Ye2)
+title('Campo 2D N=5')
+subplot(3,2,6)
+quiver(Xe2.*e0,Ye2.*e0)
+title('Densidad 2D N=5')
+
+
+%Con N = 10
+for k3=1:10
+    Ak3 =(2/(sin(k3*pi*A/B)))*sum(BC.*sinh(k3*pi*(1:B)/B).*g);
+    u3 = u3 + Ak3*sin(k3*pi*Y/B).*sinh(k3*pi*X/B);
+    [Xe3,Ye3]=gradient(u3);
+end
+%3D
+colormap cool;
+figure(3)
+colormap cool;
+subplot(3,2,1)
+meshc(X,Y,u3);
+title('Potencial 3D N=10')
+colorbar;
+subplot(3,2,3)
+meshc(Xe3,Ye3)
+title('Campo 3D N=10')
+subplot(3,2,5)
+meshc(Xe3.*e0,Ye3.*e0)
+title('Densidad 3D N=10')
+%2D
+subplot(3,2,2)
+imagesc(u3);
+colorbar;
+title('Potencial 2D N=10')
+subplot(3,2,4)
+quiver(Xe3,Ye3)
+title('Campo 2D N=10')
+subplot(3,2,6)
+quiver(Xe3.*e0,Ye3.*e0)
+title('Densidad 2D N=10')
+
+%Con N = 20
+for k4=1:20
+    Ak4 = (2/(sin(k4*pi*A/B)))*sum(BC.*sinh(k4*pi*(1:B)/B).*g);
+    u4 = u4 + Ak4*sin(k4*pi*Y/B).*sinh(k4*pi*X/B);
+    [Xe4,Ye4]=gradient(u4);
+end
+%3D
+figure(4)
+colormap cool;
+subplot(3,2,1)
+meshc(X,Y,u4);
+title('Potencial 3D N=20')
+colorbar;
+subplot(3,2,3)
+meshc(Xe4,Ye4)
+title('Campo 3D N=20')
+subplot(3,2,5)
+meshc(Xe4.*e0,Ye4.*e0)
+title('Densidad 3D N=20')
+%2D
+subplot(3,2,2)
+imagesc(u4);
+colorbar;
+title('Potencial 2D N=20')
+subplot(3,2,4)
+quiver(Xe4,Ye4)
+title('Campo 2D N=20')
+subplot(3,2,6)
+quiver(Xe4.*e0,Ye4.*e0)
+title('Densidad 2D N=20')
+
+%% ---------------------------Inciso 1.2-----------------------------------
+%Con 2*(Y2^3)+5 en g(y)
+A2 = 100;
+B2 = 100;
+p1 = zeros(A2,B2);
+p2 = zeros(A2,B2);
+p3 = zeros(A2,B2);
+p4 = zeros(A2,B2);
+[X2,Y2] = meshgrid(1:1:A2,1:1:B2);
+gy = 2*(Y2^3)+5;
+
+BC2 = ones(size(B2,1));
+
+%Con N = 2
+for L=1:2
+    Cn = (2/(cosh(L*pi*A/B)))*sum(BC2.*sin(L*pi*Y2/B).*gy);
+    p1 = p1 + Cn*cosh(L*pi*X2/B).*sin(L*pi*Y2/B);
+    [Xep1,Yep1]=gradient(p1);
+end
+%3D
+figure(5)
+subplot(3,2,1)
+meshc(X,Y,p1);
+title('Potencial 3D N=2')
+colorbar;
+subplot(3,2,3)
+meshc(Xep1,Yep1)
+title('Campo 3D N=2')
+subplot(3,2,5)
+meshc(Xep1.*e0,Yep1.*e0)
+title('Densidad 3D N=2')
+%2D
+subplot(3,2,2)
+imagesc(p1);
+colorbar;
+title('Potencial 2D N=2')
+subplot(3,2,4)
+quiver(Xep1,Yep1)
+title('Campo 2D N=2')
+subplot(3,2,6)
+quiver(Xep1.*e0,Yep1.*e0)
+title('Densidad 2D N=2')
+
+%Con N = 5
+for L=1:5
+    Cn = (2/(cosh(L*pi*A/B)))*sum(BC2.*sin(L*pi*Y2/B).*gy);
+    p2 = p2 + Cn*cosh(L*pi*X2/B).*sin(L*pi*Y2/B);
+    [Xep2,Yep2]=gradient(p2);
+end
+%3D
+figure(6)
+subplot(3,2,1)
+meshc(X,Y,p2);
+title('Potencial 3D N=5')
+colorbar;
+subplot(3,2,3)
+meshc(Xep2,Yep2)
+title('Campo 3D N=5')
+subplot(3,2,5)
+meshc(Xep2.*e0,Yep2.*e0)
+title('Densidad 3D N=5')
+%2D
+subplot(3,2,2)
+imagesc(p2);
+colorbar;
+title('Potencial 2D N=5')
+subplot(3,2,4)
+quiver(Xep2,Yep2)
+title('Campo 2D N=5')
+subplot(3,2,6)
+quiver(Xep2.*e0,Yep2.*e0)
+title('Densidad 2D N=5')
+
+%Con N = 10
+for L=1:10
+    Cn = (2/(cosh(L*pi*A/B)))*sum(BC2.*sin(L*pi*Y2/B).*gy);
+    p3 = p3 + Cn*cosh(L*pi*X2/B).*sin(L*pi*Y2/B);
+    [Xep3,Yep3]=gradient(p3);
+end
+%3D
+figure(7)
+subplot(3,2,1)
+meshc(X,Y,p3);
+title('Potencial 3D N=10')
+colorbar;
+subplot(3,2,3)
+meshc(Xep3,Yep3)
+title('Campo 3D N=10')
+subplot(3,2,5)
+meshc(Xep3.*e0,Yep3.*e0)
+title('Densidad 3D N=10')
+%2D
+subplot(3,2,2)
+imagesc(p2);
+colorbar;
+title('Potencial 2D N=10')
+subplot(3,2,4)
+quiver(Xep3,Yep3)
+title('Campo 2D N=10')
+subplot(3,2,6)
+quiver(Xep3.*e0,Yep3.*e0)
+title('Densidad 2D N=10')
+
+%Con N = 20
+for L=1:20
+    Cn = (2/(cosh(L*pi*A/B)))*sum(BC2.*sin(L*pi*Y2/B).*gy);
+    p4 = p4 + 2*Cn*cosh(L*pi*X2/B).*sin(L*pi*Y2/B);
+    [Xep4,Yep4]=gradient(p4);
+end
+%3D
+figure(8)
+subplot(3,2,1)
+meshc(X,Y,p4);
+title('Potencial 3D N=20')
+colorbar;
+subplot(3,2,3)
+meshc(Xep4,Yep4)
+title('Campo 3D N=20')
+subplot(3,2,5)
+meshc(Xep4.*e0,Yep4.*e0)
+title('Densidad 3D N=20')
+%2D
+subplot(3,2,2)
+imagesc(p2);
+colorbar;
+title('Potencial 2D N=20')
+subplot(3,2,4)
+quiver(Xep4,Yep4)
+title('Campo 2D N=20')
+subplot(3,2,6)
+quiver(Xep4.*e0,Yep4.*e0)
+title('Densidad 2D N=20')
+
+
+%% -----------------------------Inciso 1.3---------------------------------
+A3 = 100;
+B3 = 100;
+m1 = zeros(A3,B3);
+m2 = zeros(A3,B3);
+m3 = zeros(A3,B3);
+m4 = zeros(A3,B3);
+%Sin el plano x=0
+[X3,Y3] = meshgrid(1:1:A3,1:1:B3);
+hy = atan(X3/A3);
+
+BC3 = ones(size(B3,1));
+%Con N = 2
+for L=1:2
+%     alfa = (2/exp(L.*pi.*A3/B3)).*sum(BC3.*sin(L.*pi.*(1:B3)/B3).*hy); alfa*exp(L*pi*X3/B3)
+    Bn = (2/(B3.*exp(L*pi*A3/B3)))*sum(hy.*sin(L*pi*(1:B3)/B3));
+    m1 = m1 + sin(L*pi*Y3/B3).*(Bn*exp(L*pi*X3/B3));
+    [Xem1,Yem1]=gradient(m1);
+end
+%3D
+figure(9)
+subplot(3,2,1)
+meshc(X,Y,m1);
+title('Potencial 3D N=2')
+colorbar;
+subplot(3,2,3)
+meshc(Xem1,Yem1)
+title('Campo 3D N=2')
+subplot(3,2,5)
+meshc(Xem1.*e0,Yem1.*e0)
+title('Densidad 3D N=2')
+%2D
+subplot(3,2,2)
+imagesc(m1);
+colorbar;
+title('Potencial 2D N=2')
+subplot(3,2,4)
+quiver(Xem1,Yem1)
+title('Campo 2D N=2')
+subplot(3,2,6)
+quiver(Xem1.*e0,Yem1.*e0)
+title('Densidad 2D N=2')
+
+%Con N = 5
+for L=1:5
+%     alfa = (2/exp(L.*pi.*A3/B3)).*sum(BC3.*sin(L.*pi.*(1:B3)/B3).*hy);
+    Bn = (2/exp(L*pi*A3/B3))*sum(hy.*sin(L*pi*(1:B3)/B3));
+    m2 = m2 + sin(L*pi*Y3/B3).*(Bn*exp(L*pi*X3/B3));
+    [Xem2,Yem2]=gradient(m2);
+end
+%3D
+figure(10)
+subplot(3,2,1)
+meshc(X,Y,m2);
+title('Potencial 3D N=5')
+colorbar;
+subplot(3,2,3)
+meshc(Xem2,Yem2)
+title('Campo 3D N=5')
+subplot(3,2,5)
+meshc(Xem2.*e0,Yem2.*e0)
+title('Densidad 3D N=5')
+%2D
+subplot(3,2,2)
+imagesc(m2);
+colorbar;
+title('Potencial 2D N=5')
+subplot(3,2,4)
+quiver(Xem2,Yem2)
+title('Campo 2D N=5')
+subplot(3,2,6)
+quiver(Xem2.*e0,Yem2.*e0)
+title('Densidad 2D N=5')
+
+%Con N = 10
+for L=1:10
+%     alfa = (2/exp(L.*pi.*A3/B3)).*sum(BC3.*sin(L.*pi.*(1:B3)/B3).*hy);
+    Bn = (2/exp(L*pi*A3/B3))*sum(hy.*sin(L*pi*(1:B3)/B3));
+    m3 = m3 + sin(L*pi*Y3/B3).*(Bn*exp(L*pi*X3/B3));
+    [Xem3,Yem3]=gradient(m3);
+end
+%3D
+figure(11)
+subplot(3,2,1)
+meshc(X,Y,m3);
+title('Potencial 3D N=10')
+colorbar;
+subplot(3,2,3)
+meshc(Xem3,Yem3)
+title('Campo 3D N=10')
+subplot(3,2,5)
+meshc(Xem3.*e0,Yem3.*e0)
+title('Densidad 3D N=10')
+%2D
+subplot(3,2,2)
+imagesc(m3);
+colorbar;
+title('Potencial 2D N=10')
+subplot(3,2,4)
+quiver(Xem3,Yem3)
+title('Campo 2D N=10')
+subplot(3,2,6)
+quiver(Xem3.*e0,Yem3.*e0)
+title('Densidad 2D N=10')
+
+%Con N = 20
+for L=1:20
+    Bn = (2/exp(L*pi*A3/B3))*sum(hy.*sin(L*pi*(1:B3)/B3));
+    m4 = m4 + sin(L*pi*Y3/B3).*(Bn*exp(L*pi*X3/B3));
+    [Xem4,Yem4]=gradient(m4);
+end
+%3D
+figure(12)
+subplot(3,2,1)
+meshc(X,Y,m4);
+title('Potencial 3D N=20')
+colorbar;
+subplot(3,2,3)
+meshc(Xem4,Yem4)
+title('Campo 3D N=20')
+subplot(3,2,5)
+meshc(Xem4.*e0,Yem4.*e0)
+title('Densidad 3D N=20')
+%2D
+subplot(3,2,2)
+imagesc(m4);
+colorbar;
+title('Potencial 2D N=20')
+subplot(3,2,4)
+quiver(Xem4,Yem4)
+title('Campo 2D N=20')
+subplot(3,2,6)
+quiver(Xem4.*e0,Yem4.*e0)
+title('Densidad 2D N=20')
+
+%% -----------------------------Inciso 1.4---------------------------------
+A3 = 100;
+B3 = 100;
+K1 = zeros(A3,B3);
+K2 = zeros(A3,B3);
+K3 = zeros(A3,B3);
+K4 = zeros(A3,B3);
+%Sin el plano x=0, se utiliza un limite de -999 para representar infinito x
+[X4,Y4] = meshgrid(1:1:A3,1:1:B3);
+hy2 = 2*(Y4^3)+5;
+
+BC3 = ones(size(B3,1));
+%Con N = 2
+for L=1:2
+%     alfa = (2/exp(L.*pi.*A3/B3)).*sum(BC3.*sin(L.*pi.*(1:B3)/B3).*hy); alfa*exp(L*pi*X3/B3)
+    Bn2 = (2/exp(L*pi*A3/B3))*sum(hy2.*sin(L*pi*(1:B3)/B3));
+    K1 = K1 + sin(L*pi*Y3/B3).*(Bn2*exp(L*pi*X3/B3));
+    [XeK1,YeK1]=gradient(K1);
+end
+%3D
+figure(14)
+colormap spring
+subplot(3,2,1)
+meshc(X,Y,K1);
+title('Potencial 3D N=2')
+colorbar;
+subplot(3,2,3)
+meshc(XeK1,YeK1)
+title('Campo 3D N=2')
+subplot(3,2,5)
+meshc(XeK1.*e0,YeK1.*e0)
+title('Densidad 3D N=2')
+%2D
+subplot(3,2,2)
+imagesc(K1);
+colorbar;
+title('Potencial 2D N=2')
+subplot(3,2,4)
+quiver(XeK1,YeK1)
+title('Campo 2D N=2')
+subplot(3,2,6)
+quiver(XeK1.*e0,YeK1.*e0)
+title('Densidad 2D N=2')
+
+
+%Con N = 5
+for L=1:5
+%     alfa = (2/exp(L.*pi.*A3/B3)).*sum(BC3.*sin(L.*pi.*(1:B3)/B3).*hy);
+    Bn2 = (2/exp(L*pi*A3/B3))*sum(hy2.*sin(L*pi*(1:B3)/B3));
+    K2 = K2 + sin(L*pi*Y3/B3).*(Bn2*exp(L*pi*X3/B3));
+    [XeK2,YeK2]=gradient(K2);
+end
+%3D
+figure(15)
+colormap spring
+subplot(3,2,1)
+meshc(X,Y,K2);
+title('Potencial 3D N=5')
+colorbar;
+subplot(3,2,3)
+meshc(XeK2,YeK2)
+title('Campo 3D N=5')
+subplot(3,2,5)
+meshc(XeK2.*e0,YeK2.*e0)
+title('Densidad 3D N=5')
+%2D
+subplot(3,2,2)
+imagesc(K1);
+colorbar;
+title('Potencial 2D N=5')
+subplot(3,2,4)
+quiver(XeK1,YeK1)
+title('Campo 2D N=5')
+subplot(3,2,6)
+quiver(XeK1.*e0,YeK1.*e0)
+title('Densidad 2D N=5')
+
+%Con N = 10
+for L=1:10
+%     alfa = (2/exp(L.*pi.*A3/B3)).*sum(BC3.*sin(L.*pi.*(1:B3)/B3).*hy);
+    Bn2 = (2/exp(L*pi*A3/B3))*sum(hy2.*sin(L*pi*(1:B3)/B3));
+    K3 = K3 + sin(L*pi*Y3/B3).*(Bn2*exp(L*pi*X3/B3));
+    [XeK3,YeK3]=gradient(K3);
+end
+%3D
+figure(16)
+colormap spring
+subplot(3,2,1)
+meshc(X,Y,K3);
+title('Potencial 3D N=10')
+colorbar;
+subplot(3,2,3)
+meshc(XeK3,YeK3)
+title('Campo 3D N=10')
+subplot(3,2,5)
+meshc(XeK3.*e0,YeK3.*e0)
+title('Densidad 3D N=10')
+%2D
+subplot(3,2,2)
+imagesc(K3);
+colorbar;
+title('Potencial 2D N=10')
+subplot(3,2,4)
+quiver(XeK3,YeK3)
+title('Campo 2D N=10')
+subplot(3,2,6)
+quiver(XeK3.*e0,YeK3.*e0)
+title('Densidad 2D N=10')
+
+%Con N = 20
+for L=1:20
+    Bn2 = (2/exp(L*pi*A3/B3))*sum(hy2.*sin(L*pi*(1:B3)/B3));
+    K4 = K4 + sin(L*pi*Y3/B3).*(Bn2*exp(L*pi*X3/B3));
+    [XeK4,YeK4]=gradient(K4);
+end
+%3D
+figure(17)
+colormap spring
+subplot(3,2,1)
+meshc(X,Y,K4);
+title('Potencial 3D N=20')
+colorbar;
+subplot(3,2,3)
+meshc(XeK4,YeK4)
+title('Campo 3D N=20')
+subplot(3,2,5)
+meshc(XeK4.*e0,YeK4.*e0)
+title('Densidad 3D N=20')
+%2D
+subplot(3,2,2)
+imagesc(K4);
+colorbar;
+title('Potencial 2D N=20')
+subplot(3,2,4)
+quiver(XeK4,YeK4)
+title('Campo 2D N=20')
+subplot(3,2,6)
+quiver(XeK4.*e0,YeK4.*e0)
+title('Densidad 2D N=20')
+%% -----------------------------Inciso 1.5---------------------------------
+A3 = 100;
+B3 = 100;
+N1 = zeros(A3,B3);
+N2 = zeros(A3,B3);
+N3 = zeros(A3,B3);
+N4 = zeros(A3,B3);
+[X4,Y4] = meshgrid(1:1:A3,1:1:B3);
+hy4 = X4.*Y4^2;
+
+BC3 = ones(size(B3,1));
+%Con N = 2
+for m=1:2
+for L=1:2
+    Bn4 = (4/(A3*B3)).*sum(sum(hy4.*sin(L*pi*(1:B3)/B3).*sin(L*pi*(1:A3)/A3)));
+    N1 = N1 + Bn4*sin(L*pi*Y4/A3).*sin(m*pi*X4/B3);
+    [XeN1,YeN1]=gradient(N1);
+end
+end
+%3D
+figure(18)
+colormap parula
+subplot(3,2,1)
+meshc(X,Y,N1);
+title('Potencial 3D N=2')
+colorbar;
+subplot(3,2,3)
+meshc(XeN1,YeN1)
+title('Campo 3D N=2')
+subplot(3,2,5)
+meshc(XeN1.*e0,YeN1.*e0)
+title('Densidad 3D N=2')
+%2D
+subplot(3,2,2)
+imagesc(N1);
+colorbar;
+title('Potencial 2D N=2')
+subplot(3,2,4)
+quiver(XeN1,YeN1)
+title('Campo 2D N=2')
+subplot(3,2,6)
+quiver(XeN1.*e0,YeN1.*e0)
+title('Densidad 2D N=2')
+
+%Con N = 5
+for L=1:5
+for m=1:5
+    Bn4 = (4/(A3*B3)).*sum(sum(hy4.*sin(L*pi*(1:B3)/B3).*sin(L*pi*(1:A3)/A3)));
+    N2 = N2 + Bn4*sin(L*pi*Y4/A3).*sin(m*pi*X4/B3);
+    [XeN2,YeN2]=gradient(N2);
+end
+end
+%3D
+figure(19)
+colormap parula
+subplot(3,2,1)
+meshc(X,Y,N2);
+title('Potencial 3D N=5')
+colorbar;
+subplot(3,2,3)
+meshc(XeN2,YeN2)
+title('Campo 3D N=5')
+subplot(3,2,5)
+meshc(XeN2.*e0,YeN2.*e0)
+title('Densidad 3D N=5')
+%2D
+subplot(3,2,2)
+imagesc(N2);
+colorbar;
+title('Potencial 2D N=5')
+subplot(3,2,4)
+quiver(XeN2,YeN2)
+title('Campo 2D N=5')
+subplot(3,2,6)
+quiver(XeN2.*e0,YeN2.*e0)
+title('Densidad 2D N=5')
+
+%Con N = 10
+for L=1:10
+for m=1:10
+    Bn4 = (4/(A3*B3)).*sum(sum(hy4.*sin(L*pi*(1:B3)/B3).*sin(L*pi*(1:A3)/A3)));
+    N3 = N3 + Bn4*sin(L*pi*Y4/A3).*sin(m*pi*X4/B3);
+    [XeN3,YeN3]=gradient(N3);
+end
+end
+%3D
+figure(20)
+colormap parula
+subplot(3,2,1)
+meshc(X,Y,N3);
+title('Potencial 3D N=10')
+colorbar;
+subplot(3,2,3)
+meshc(XeN3,YeN3)
+title('Campo 3D N=10')
+subplot(3,2,5)
+meshc(XeN3.*e0,YeN3.*e0)
+title('Densidad 3D N=10')
+%2D
+subplot(3,2,2)
+imagesc(N3);
+colorbar;
+title('Potencial 2D N=10')
+subplot(3,2,4)
+quiver(XeN3,YeN3)
+title('Campo 2D N=10')
+subplot(3,2,6)
+quiver(XeN3.*e0,YeN3.*e0)
+title('Densidad 2D N=10')
+
+%Con N = 20
+for L=1:20
+for m=1:20
+    Bn4 = (4/(A3*B3)).*sum(sum(hy4.*sin(L*pi*(1:B3)/B3).*sin(L*pi*(1:A3)/A3)));
+    N4 = N4 + Bn4*sin(L*pi*Y4/A3).*sin(m*pi*X4/B3);
+    [XeN4,YeN4]=gradient(N4);
+end
+end
+%3D
+figure(21)
+colormap parula
+subplot(3,2,1)
+meshc(X,Y,N4);
+title('Potencial 3D N=20')
+colorbar;
+subplot(3,2,3)
+meshc(XeN4,YeN4)
+title('Campo 3D N=20')
+subplot(3,2,5)
+meshc(XeN4.*e0,YeN4.*e0)
+title('Densidad 3D N=20')
+%2D
+subplot(3,2,2)
+imagesc(N4);
+colorbar;
+title('Potencial 2D N=20')
+subplot(3,2,4)
+quiver(XeN4,YeN4)
+title('Campo 2D N=20')
+subplot(3,2,6)
+quiver(XeN4.*e0,YeN4.*e0)
+title('Densidad 2D N=20')
+%% -----------------------------Problema 2---------------------------------
+e0=8.854*10^-12;
+[X222,Y222,Z222] = meshgrid(-2:.2:2);
+V = X222.*exp(-X222.^2-Y222.^2-Z222.^2);
+syms phi rho theta
+x = sin(phi).*cos(theta);
+y = sin(phi).*sin(theta);
+z = cos(phi);
+R=1;
+
+for r=0:0.1:1
+roIn=-(((3.*r)/10)+(6.*(r.^3)/25.*R.^2)).*(1/e0).*cos(phi);
+rOut= -(((3.*R.^3)/(10.*r.^2))+(6.*(R.^5)/25.*r.^4)).*(1/e0).*cos(phi);
+rtotal=roIn+rOut;
+roInE=-(((3.*r)/10)+(6.*(r.^3)/25.*R.^2)).*(1/e0).*sin(phi);
+rOutE= -(((3.*R.^3)/(10.*r.^2))+(6.*(R.^5)/25.*r.^4)).*(1/e0).*sin(phi);
+rtotalE=roInE+rOutE;
+end
+
+figure(22)
+
+colormap cool
+subplot(2,2,1)
+fsurf(x,y,rtotal)
+title('Potencial 3D - Esferica')
+subplot(2,2,2)
+colorbar;
+xslice = [1];   
+yslice = [];
+zslice = [];
+slice(X222,Y222,Z222,V,xslice,yslice,zslice)
+title('Potencial 2D - Esferica')
+subplot(2,2,3)
+fsurf(x,y,rtotalE)
+title('Campo 3D - Esferica')
+subplot(2,2,4)
+xslice = [-1];   
+yslice = [];
+zslice = [];
+slice(X222,Y222,Z222,V,xslice,yslice,zslice)
+title('Campo 2D - Esferica')
+
+%% ----------------------------Problema 2.1--------------------------------
+V = X222.*exp(-X222.^2-Y222.^2-(1-X222-Y222).^2);
+b=1;
+a=1;
+k=1;
+e0=8.854*10^-12;
+syms phi rho theta
+x = sin(phi).*cos(theta);
+y = sin(phi).*sin(theta);
+z = cos(phi);
+R=1;
+for r=0:0.1:1
+r2oIn=((R/(e0.*r))*(1+1/b))+((2*((b^5)+(a^5)*k))/(3*e0*(b^5).*r^3))*cos(phi)^2;
+r2Out= ((R/(e0.*r))*(1+1/b))-(2*k/(3*e0*b^5))*((r.^2)-(a^5)/(r^3));
+r2total=r2oIn+r2Out;
+r2oInE=-((R/(e0.*r))*(1+1/b))+((2*((b^5)+(a^5)*k))/(3*e0*(b^5).*r^3))*sin(phi)^2;
+r2OutE= ((R/(e0.*r))*(1+1/b))-(2*k/(3*e0*b^5))*((r.^2)-(a^5)/(r^3));
+r2totalE=r2oInE+r2OutE;
+end     
+figure(23)
+colormap spring
+subplot(2,2,1)
+fsurf(x,y,r2total)
+title('Potencial 3D - Esferica')
+subplot(2,2,2)
+xslice = [];   
+yslice = [0];
+zslice = [];
+slice(X222,Y222,Z222,V,xslice,yslice,zslice)
+title('Potencial 2D - Esferica')
+subplot(2,2,3)
+fsurf(x,y,r2totalE)
+title('Campo 3D - Esferica')
+subplot(2,2,4)
+xslice = [];   
+yslice = [1];
+zslice = [];
+slice(X222,Y222,Z222,V,xslice,yslice,zslice)
+title('Campo 2D - Esferica')
